@@ -1,0 +1,17 @@
+pollutantmean <- function(directory, pollutant, id = 2:10) {
+        setwd(directory)
+        dataset.1 <- read.csv("001.csv")
+        total_data <- dataset.1
+        
+        for(i in id) {
+                file <- sprintf("%03d",i)
+                file_name <- paste(file,"csv",sep=".")
+                                
+                dataframe <- paste("dataset",i,sep=".")
+                assign(dataframe, read.csv(file_name))
+                total_data <- rbind(total_data,dataframe)
+        }
+        meanpollutant <- mean(total_data[[pollutant]],na.rm=TRUE)
+        print(meanpollutant)
+        setwd('..')
+}
