@@ -1,15 +1,13 @@
-pollutantmean <- function(directory, pollutant, id = 2:10) {
+pollutantmean <- function(directory, pollutant, id = 1:10) {
         setwd(directory)
-        dataset.1 <- read.csv("001.csv")
-        total_data <- dataset.1
+        total_data <- matrix(nrow=1, ncol=4, dimnames=list(c("1"),c("Date","sulfate","nitrate","ID")))
         
         for(i in id) {
                 file <- sprintf("%03d",i)
                 file_name <- paste(file,"csv",sep=".")
                                 
                 dataframe <- paste("dataset",i,sep=".")
-                assign(dataframe, read.csv(file_name))
-                total_data <- rbind(total_data,dataframe)
+                total_data <- rbind(total_data,assign(dataframe, read.csv(file_name)))
         }
         meanpollutant <- mean(total_data[[pollutant]],na.rm=TRUE)
         print(meanpollutant)
